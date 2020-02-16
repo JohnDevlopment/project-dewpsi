@@ -1,0 +1,86 @@
+.TH PDLVL 3 2020-03-10 libpdlvl "Project Dewpsi Manuals"
+.mso pd.tmac
+.
+.SH NAME
+pdlvl_writeheader, pdlvl_writeAREA, pdlvl_writelevel, pdlvl_readheader \- functions to write level data to file
+.
+.SH SYNOPSIS
+.
+.FA int pdlvl_writeheader FILE* stream "const Level*" lvl
+\&
+.
+.FA int pdlvl_writeAREA FILE* stream "const Level*" lvl size_t idx
+\&
+.
+.FA int pdlvl_writelevel FILE* stream "const Level*" lvl
+\&
+.
+.FA int pdlvl_readheader FILE* stream Level* lvl
+\&
+.
+.SH DESCRIPTION
+.
+.FA int pdlvl_writeheader FILE* stream "const Level*" lvl
+Writes the level header inside of \fIlvl\fP to a stream pointed to by
+.I stream .
+.AL
+.AO stream
+A pointer to a FILE object that identifies a stream.
+.AO lvl
+A pointer to the level structure.
+.LA
+.
+.FA int pdlvl_writeAREA FILE* stream "const Level*" lvl size_t idx
+Writes an AREA block to the stream pointed to by
+.I stream .
+.AL
+.AO stream
+A pointer to a FILE object that identifies a stream.
+.AO lvl
+A pointer to the level structure.
+.AO idx
+The number of the sub-division to write to stream.
+.LA
+.
+.FA int pdlvl_writelevel FILE* stream "const Level*" lvl
+Writes all level data to the stream pointed to by
+.I stream .
+.AL
+.AO stream
+A pointer to a FILE object that identifies a stream.
+.AO lvl
+A pointer to the level structure.
+.LA
+.
+.FA int pdlvl_readheader FILE* stream Level* lvl
+Reads the header of the file, sans the four-byte magic number,
+into the header of the level structure.
+.AL
+.AO stream
+A pointer to a FILE object that identifies a stream.
+.AO lvl
+A pointer to the level structure,
+the header of which is filled with data from the stream.
+.LA
+.
+.SH "RETURN VALUE"
+.
+.PP
+.BR pdlvl_writeheader ", " pdlvl_writeAREA ", and " pdlvl_readheader
+all return 1 on success and 0 on error.
+In the case of errors,
+a call to
+.I pdlvl_geterror
+returns the error message.
+
+.B pdlvl_writelevel
+returns the number of bytes written to file or -1 on error.
+If the function generates an error,
+call
+.I pdlvl_geterror
+to retrieve the error message.
+.
+.SH "SEE ALSO"
+.SEE pdlvl_geterror 3
+.
+.COLOPHON

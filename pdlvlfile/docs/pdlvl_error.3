@@ -1,0 +1,25 @@
+.TH PDLVL 3 2020-03-07 libpdlvl "Project Dewpsi Manuals"
+.mso pd.tmac
+.
+.SH NAME
+pdlvl_geterror, pdlvl_seterror \- get and modify error strings
+.
+.SH SYNOPSIS
+.
+.FA void pdlvl_seterror "const char*" fmt ...
+Formats an internal error string according to \fIfmt\fP,
+using the same rules as in printf.\(em\c
+See
+.B printf (3).
+
+.FA char* pdlvl_geterror -const
+Returns the last error string formatted with
+.B pdlvl_seterror .
+.
+.SH DESCRIPTION
+.
+.B pdlvl_seterror
+is used by the library to set error strings every time an error occurs in one of its functions.
+The programmer can then call \fBpdlvl_geterror\fP to retrieve that string that explains the error.
+.
+.COLOPHON
