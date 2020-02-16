@@ -8,9 +8,9 @@ located in the "pdlvlfile" folder.
 ## Table of contents
 
 1. [How to build a project](#S1)
-  1. [Instructions](#S1_SS1)
-  2. [Options](#S1_SS2)
-  3. [Notes](#S1_SS3)
+   1. [Instructions](#S1_SS1)
+   2. [Options](#S1_SS2)
+   3. [Notes](#S1_SS3)
 
 - - -
 
