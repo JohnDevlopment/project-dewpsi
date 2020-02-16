@@ -55,7 +55,7 @@ Both the source path and the binary path can be relative.
   * Path to the binary directory, which defines the top level of the build tree.
     By convention, I like to make the binary path point to a directory called "build"
     underneath the source directory. But that is not strictly necessary.
-* -D_var=value_
+* -D*var=value*
   * Define a cache variable named _var_ with the value _value_. For each project, a list
     of variables that are used will be listed.
 
