@@ -1,4 +1,4 @@
-<a id="project-dewpsi"></a>
+<a id="top"></a>
 # project-dewpsi
 Libraries and programs associated with Project Dewpsi
 
@@ -7,20 +7,19 @@ located in the "pdlvlfile" folder.
 
 ## Table of contents
 
-1. [How to build a project](#How to build a project)
-  * [Instructions](#How to build a project_Instructions)
-  * [Options](#How to build a project_Options)
-  * [Notes](#How to build a project_Notes)
+1. [How to build a project](#S1)
+  * [Instructions](#S1_SS1)
+  * [Options](#S1_SS2)
+  * [Notes](#S1_SS3)
 
 - - -
 
 <a id="S1"></a>
-<a id="How to build a project"></a>
 # How to build a project
 The programs and libraries contained by this repository are built using
 CMake. Here is how to use CMake to build the projects herein.
 
-<a id="How to build a project_Instructions"></a>
+<a id="S1_SS1"></a>
 ## Instructions
 Go into the "build" directory. Use the `cmake` command to generate the makefiles.
 
@@ -44,7 +43,7 @@ to disallow that.
 
 Both the source path and the binary path can be relative.
 
-<a id="How to build a project_Options"></a>
+<a id="S1_SS2"></a>
 ## Options
 
 ### Main options
@@ -60,11 +59,11 @@ Both the source path and the binary path can be relative.
   * Define a cache variable named _var_ with the value _value_. For each project, a list
     of variables that are used will be listed.
 
-<a id="How to build a project_Notes"></a>
+<a id="S1_SS3"></a>
 ## Notes
 It is important to know some things about how I sort my files here. For starters, all my CMake modules
 are located in "/CMake/modules" (relative to the source directory).
 
 - - -
 
-[Return to top](#project-dewpsi)
+[Return to top](#top)
