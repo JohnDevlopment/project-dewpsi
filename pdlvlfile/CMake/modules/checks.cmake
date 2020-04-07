@@ -1,0 +1,1 @@
+/home/john/programming/C++/projects/project-dewpsi/CMake/checks.cmake

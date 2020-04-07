@@ -1,0 +1,32 @@
+.TH "pd_stddef.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_stddef.h \- Header that includes several macros and struct declarations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLevelHeader_Defined\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header that includes several macros and struct declarations\&. 
+
+Macros defined herein are for implementing function attributes in compilers that support them\&.
+.PP
+Struct declarations make the types \fBLevelHeader\fP, \fBSubArea\fP, \fBLevel\fP, and \fBTile\fP visible to the rest of the library and to external programs\&. 
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define LevelHeader_Defined"
+Makes functions 'pure'\&.
+.PP
+Makes functions 'constant'\&. A constant function cannot refer to variables outside its scope (AKA, global variables or those passed by pointer/reference)\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

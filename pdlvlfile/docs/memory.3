@@ -1,0 +1,179 @@
+.TH "memory" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+memory \- Includes functions to allocate and free blocks of memory\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBpdlvl_malloc\fP (size_t size)"
+.br
+.RI "Allocates a block of memory\&. "
+.ti -1c
+.RI "void * \fBpdlvl_calloc\fP (size_t count, size_t size)"
+.br
+.RI "Allocates an array of blocks of memory \fIsize\fP bytes long\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_newempty\fP (void)"
+.br
+.RI "Allocates an empty level structure\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_new\fP (const char *dims)"
+.br
+.RI "Allocates a level structure with sub-divisions\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_new_i\fP (size_t numdivs, const int *pdims)"
+.br
+.RI "Allocates a level structure with a number of sub-divisions\&. "
+.ti -1c
+.RI "void \fBpdlvl_free\fP (\fBLevel\fP *ptr)"
+.br
+.RI "Frees a level structure from memory\&. "
+.ti -1c
+.RI "void \fBpdlvl_freedivs\fP (\fBSubArea\fP *divs, size_t numdivs)"
+.br
+.RI "Frees a sub-area array from memory\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Includes functions to allocate and free blocks of memory\&. 
+
+Also includes function to interact with the level data structures\&. 
+.SH "Function Documentation"
+.PP 
+.SS "void* pdlvl_calloc (size_t count, size_t size)"
+
+.PP
+Allocates an array of blocks of memory \fIsize\fP bytes long\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcount\fP Number of blocks to allocate\&. 
+.br
+\fIsize\fP Bytes that each block takes\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the allocated blocks of memory or \fCNULL\fP on failure\&. In case of error, obtain the error message with \fBpdlvl_geterror()\fP\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The pointer returned must be freed later with free()\&. 
+.RE
+.PP
+
+.SS "void pdlvl_free (\fBLevel\fP * ptr)"
+
+.PP
+Frees a level structure from memory\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP A pointer to a level structure\&. 
+.RE
+.PP
+
+.SS "void pdlvl_freedivs (\fBSubArea\fP * divs, size_t numdivs)"
+
+.PP
+Frees a sub-area array from memory\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdivs\fP An array of sub-areas\&. 
+.br
+\fInumdivs\fP How many sub-divisions are in the array\&. 
+.RE
+.PP
+
+.SS "void* pdlvl_malloc (size_t size)"
+
+.PP
+Allocates a block of memory\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsize\fP How many bytes to allocate\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to a block allocated memory or \fCNULL\fP on failure\&. In case of error, obtain the error message with \fBpdlvl_geterror()\fP\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+It must be freed later with free()\&. 
+.RE
+.PP
+
+.SS "\fBLevel\fP* pdlvl_new (const char * dims)"
+
+.PP
+Allocates a level structure with sub-divisions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdims\fP A string with an even number of space-separated decimal numbers\&. Each pair defines the width and height of a sub-area, counting from ID 0 and onwards\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to a newly created level structure with \fInumdivs\fP sub-areas or \fCNULL\fP on failure\&. Retrieve the error message with \fBpdlvl_geterror()\fP\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The pointer returned by the function must be freed later with \fBpdlvl_free()\fP\&. 
+.RE
+.PP
+
+.SS "\fBLevel\fP* pdlvl_new_i (size_t numdivs, const int * pdims)"
+
+.PP
+Allocates a level structure with a number of sub-divisions\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fInumdivs\fP The number of divisions in the level\&. 
+.br
+\fIpdims\fP A pointer to an array of integers arranged in pairs\&. The first of each pair is the width of a sub-area, and the second is the height\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to a newly created level structure with \fInumdivs\fP sub-areas or \fCNULL\fP on failure\&. Retrieve the error message with \fBpdlvl_geterror()\fP\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The pointer returned by the function must be freed later with \fBpdlvl_free()\fP\&. 
+.RE
+.PP
+
+.SS "\fBLevel\fP* pdlvl_newempty (void)"
+
+.PP
+Allocates an empty level structure\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to an empty level structure or \fCNULL\fP upon failure\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The pointer returned must be freed later with \fBpdlvl_free()\fP\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

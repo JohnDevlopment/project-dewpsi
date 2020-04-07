@@ -1,0 +1,57 @@
+.TH "pd_endian.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_endian.h \- Header file for PD endian swapping functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBpdlvl_swap16\fP(x)"
+.br
+.RI "Swaps a 16 bit integer\&. "
+.ti -1c
+.RI "#define \fBpdlvl_swap32\fP(x)"
+.br
+.RI "Swaps a 32 bit integer\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBpdlvl_ntole16\fP (uint16_t x)"
+.br
+.RI "Converts a 16 bit integer to little endian from the native byte order\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_ntole32\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to little endian from the native byte order\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_ntobe32\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to big endian from the native byte order\&. "
+.ti -1c
+.RI "uint16_t \fBpdlvl_le16ton\fP (uint16_t x)"
+.br
+.RI "Converts a 16 bit integer to the native byte order from little endian\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_le32ton\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to the native byte order from little endian\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_be32ton\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to the native byte order from big endian\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for PD endian swapping functions\&. 
+
+This API supports swapping the endianness of integral values based on the system's endianness\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

@@ -7,9 +7,10 @@
 extern "C" {
 #endif /* __cplusplus */
 
+/*! Struct representing a tile. */
 struct Tile {
-    uint8_t gfx;
-    uint8_t code;
+    uint8_t gfx;    /*!< Graphics index. */
+    uint8_t code;   /*!< Code index. */
 };
 
 #ifdef __cplusplus

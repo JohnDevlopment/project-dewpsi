@@ -1,10 +1,13 @@
+# Build rules for pdlvlfile
+#--------------------------
+
 # description of binary target pdlvlfile
 if (${TYPE} MATCHES shared)
-	add_library(pdlvlfile SHARED ${FILES})
+	add_library(pdlvlfile SHARED ${SOURCE_FILES})
 elseif (${TYPE} MATCHES module)
-	add_library(pdlvlfile MODULE ${FILES})
+	add_library(pdlvlfile MODULE ${SOURCE_FILES})
 elseif (${TYPE} MATCHES static)
-	add_library(pdlvlfile STATIC ${FILES})
+	add_library(pdlvlfile STATIC ${SOURCE_FILES})
 else ()
 	message (FATAL_ERROR "add_Library type ${TYPE} not valid; can be shared, static, or module")
 endif ()
@@ -13,52 +16,9 @@ endif ()
 set_target_properties (
 	pdlvlfile
 	  PROPERTIES
-	    FRAMEWORK TRUE
-	    FRAMEWORK_VERSION C
 	    PUBLIC_HEADER "${PUBLIC_HEADERS}"
 	    SOVERSION ${pdlvlfileP_VERSION}
 	    VERSION ${pdlvlfileP_VERSION}
-)
-
-# configuration options
-if (${DEBUG})
-# debug build
-	target_compile_options (
-		pdlvlfile
-		  PRIVATE
-		    "SHELL:-Og"
-		    "SHELL:-g"
-	)
-else ()
-# release build
-	target_compile_options (
-		pdlvlfile
-		  PRIVATE
-		    "SHELL:-O2"
-		    $<$<BOOL:${SUGGEST_ATTR}>:"SHELL:-Wsuggest-attribute=${SUGGEST_ATTR}">
-	)
-	target_compile_definitions (
-		pdlvlfile
-		  PRIVATE
-		    $<$<BOOL:${KEEP}>:KEEP_SWAP_FUNCTIONS=1>
-	)
-endif ()
-
-# all builds
-target_compile_options (
-	pdlvlfile
-	  PRIVATE
-	    "SHELL:-Wbool-compare"
-	    "SHELL:-Wfloat-equal"
-	    "SHELL:-Wattributes"
-	    "SHELL:-Wunused"
-)
-target_compile_definitions (
-	pdlvlfile
-	  PRIVATE
-	    $<$<BOOL:${KEEP}>:KEEP_SWAP_FUNCTIONS=1>
-	    $<UPPER_CASE:${TYPE}>
-	    $<$<NOT:$<BOOL:${DEBUG}>>:NDEBUG>
 )
 
 # global options
@@ -67,9 +27,14 @@ target_include_directories (
 	  pdlvlfile
 	    PRIVATE
 	      ${PROJECT_ROOT_DIR}
-	)
+)
 
-#  installation
+# precompile headers and use them for the source files
+target_precompile_headers (pdlvlfile PRIVATE ${PROJECT_ROOT_DIR}/pd_stdinc.h)
+
+### Installation rules
+
+# install primary target and headers
 install (
 	TARGETS
 	  pdlvlfile
@@ -78,3 +43,9 @@ install (
 	    PUBLIC_HEADER
 	      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pdlvlfile
 )
+
+### Post-build rules and targets
+
+# uninstall rule
+configure_file (${PROJECT_ROOT_DIR}/CMake/cmake_uninstall.cmake ${pdlvlfileP_BINARY_DIR}/cmake_uninstall.cmake @ONLY)
+add_custom_target (uninstall COMMAND ${CMAKE_COMMAND} -P ${pdlvlfileP_BINARY_DIR}/cmake_uninstall.cmake)

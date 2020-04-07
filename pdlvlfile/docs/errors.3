@@ -1,0 +1,85 @@
+.TH "errors" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+errors \- Functions that set and get error messages\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBpdlvl_badparam\fP(str)"
+.br
+.RI "Formats a 'bad parameter' error string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_outofmemory\fP()"
+.br
+.RI "Formats an 'out of memory' error string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_writeerror\fP()"
+.br
+.RI "Formats a 'write operation' error string\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBpdlvl_seterror\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "Formats an error string, which can be retrieved with \fBpdlvl_geterror()\fP\&. "
+.ti -1c
+.RI "const char * \fBpdlvl_geterror\fP ()"
+.br
+.RI "Returns the error string\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions that set and get error messages\&. 
+
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define pdlvl_badparam(str)"
+
+.PP
+Formats a 'bad parameter' error string\&. Calls \fBpdlvl_seterror()\fP\&. 
+.SS "#define pdlvl_outofmemory()"
+
+.PP
+Formats an 'out of memory' error string\&. Calls \fBpdlvl_seterror()\fP\&. 
+.SS "#define pdlvl_writeerror()"
+
+.PP
+Formats a 'write operation' error string\&. Calls \fBpdlvl_seterror()\fP\&. 
+.SH "Function Documentation"
+.PP 
+.SS "const char* pdlvl_geterror ()"
+
+.PP
+Returns the error string\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+The error string set by the last call to \fBpdlvl_seterror()\fP\&. 
+.RE
+.PP
+
+.SS "void pdlvl_seterror (const char * fmt,  \&.\&.\&.)"
+
+.PP
+Formats an error string, which can be retrieved with \fBpdlvl_geterror()\fP\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfmt\fP The format of the string, forwarded to vsprintf\&. 
+.br
+\fI\&.\&.\&.\fP A list of arguments corresponding to the format string, forwarded to vsprintf\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

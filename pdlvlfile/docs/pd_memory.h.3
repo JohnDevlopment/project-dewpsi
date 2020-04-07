@@ -1,0 +1,246 @@
+.TH "pd_memory.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_memory.h \- Header that contains memory manipulation functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void * \fBpdlvl_malloc\fP (size_t size)"
+.br
+.RI "Allocates a block of memory\&. "
+.ti -1c
+.RI "void * \fBpdlvl_calloc\fP (size_t count, size_t size)"
+.br
+.RI "Allocates an array of blocks of memory \fIsize\fP bytes long\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_newempty\fP (void)"
+.br
+.RI "Allocates an empty level structure\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_new\fP (const char *dims)"
+.br
+.RI "Allocates a level structure with sub-divisions\&. "
+.ti -1c
+.RI "\fBLevel\fP * \fBpdlvl_new_i\fP (size_t numdivs, const int *pdims)"
+.br
+.RI "Allocates a level structure with a number of sub-divisions\&. "
+.ti -1c
+.RI "void \fBpdlvl_free\fP (\fBLevel\fP *ptr)"
+.br
+.RI "Frees a level structure from memory\&. "
+.ti -1c
+.RI "void \fBpdlvl_freedivs\fP (\fBSubArea\fP *divs, size_t numdivs)"
+.br
+.RI "Frees a sub-area array from memory\&. "
+.ti -1c
+.RI "FILE * \fBpdlvl_open\fP (const char *file, const char *mode)"
+.br
+.RI "Opens a binary file for read or write\&. "
+.ti -1c
+.RI "void \fBpdlvl_close\fP (FILE *handle)"
+.br
+.RI "Closes a stream\&. "
+.ti -1c
+.RI "int \fBpdlvl_numdivs\fP (const \fBLevel\fP *ptr)"
+.br
+.RI "Returns the number of sub-divisions in the level\&. "
+.ti -1c
+.RI "\fBLevelHeader\fP * \fBpdlvl_header\fP (\fBLevel\fP *ptr)"
+.br
+.RI "Returns a reference to the level header from a level structure\&. "
+.ti -1c
+.RI "const \fBLevelHeader\fP * \fBpdlvl_cheader\fP (const \fBLevel\fP *ptr)"
+.br
+.RI "Returns a constant reference to the level header\&. "
+.ti -1c
+.RI "\fBSubArea\fP * \fBpdlvl_subdiv\fP (\fBLevel\fP *lvl, size_t idx, int *pw, int *ph, \fBTile\fP **pptiles)"
+.br
+.RI "Retrieves information about a level sub-area\&. "
+.ti -1c
+.RI "const \fBSubArea\fP * \fBpdlvl_csubdiv\fP (const \fBLevel\fP *lvl, size_t idx, int *pw, int *ph, const \fBTile\fP **pptiles)"
+.br
+.RI "Retrieves information about a level sub-area\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header that contains memory manipulation functions\&. 
+
+
+.SH "Function Documentation"
+.PP 
+.SS "const \fBLevelHeader\fP* pdlvl_cheader (const \fBLevel\fP * ptr)"
+
+.PP
+Returns a constant reference to the level header\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP A valid pointer to a level structure\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A read-only reference to a level header, or \fCNULL\fP if the parameter is \fCNULL\fP\&. 
+.RE
+.PP
+
+.SS "void pdlvl_close (FILE * handle)"
+
+.PP
+Closes a stream\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIhandle\fP A pointer to a \fCFILE\fP object that was previously returned by \fBpdlvl_open()\fP\&. 
+.RE
+.PP
+
+.SS "const \fBSubArea\fP* pdlvl_csubdiv (const \fBLevel\fP * lvl, size_t idx, int * pw, int * ph, const \fBTile\fP ** pptiles)"
+
+.PP
+Retrieves information about a level sub-area\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlvl\fP A pointer to a level structure\&. 
+.br
+\fIidx\fP Sub-area number (starting from 0)\&. 
+.br
+\fIpw\fP A pointer that, if set, is filled with the width of the sub-area\&. 
+.br
+\fIph\fP A pointer that, if set, is filled with the height of the sub-area\&. 
+.br
+\fIpptiles\fP A pointer that, if set, is filled with the address to an array of tiles\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the requested sub-area or \fCNULL\fP if \fIlvl\fP is \fCNULL\fP, \fIidx\fP is invalid, or the level structure has no sub-areas\&. 
+.RE
+.PP
+\fBRemarks:\fP
+.RS 4
+The pointer returned by this function, and the pointer referenced by \fIpptiles\fP, are read only\&. The memory pointed to by these pointers cannot be modified\&. 
+.RE
+.PP
+
+.SS "\fBLevelHeader\fP* pdlvl_header (\fBLevel\fP * ptr)"
+
+.PP
+Returns a reference to the level header from a level structure\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP A pointer to a level structure\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the header located inside \fIptr\fP or \fCNULL\fP if the parameter is \fCNULL\fP\&. 
+.RE
+.PP
+
+.SS "int pdlvl_numdivs (const \fBLevel\fP * ptr)"
+
+.PP
+Returns the number of sub-divisions in the level\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP A pointer to a level structure\&. 
+.RE
+.PP
+
+.SS "FILE* pdlvl_open (const char * file, const char * mode)"
+
+.PP
+Opens a binary file for read or write\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfile\fP A path to the file to load\&. 
+.br
+\fImode\fP A string specifying the file operations to enable\&. \fIMode\fP can be one of the following:
+.IP "\(bu" 2
+w
+.IP "  \(bu" 4
+Binary write, truncate the file if it exists\&.
+.PP
+
+.IP "\(bu" 2
+w+
+.IP "  \(bu" 4
+Binary write/read, truncate the file if it exists\&.
+.PP
+
+.IP "\(bu" 2
+r
+.IP "  \(bu" 4
+Binary read, the file must already exist\&.
+.PP
+
+.IP "\(bu" 2
+r+
+.IP "  \(bu" 4
+Binary read/write, the file must already exist\&.
+.PP
+
+.IP "\(bu" 2
+a
+.IP "  \(bu" 4
+Binary append, create a new file if needed\&. All output operations are tacked onto the end of the file\&.
+.PP
+
+.IP "\(bu" 2
+a+
+.IP "  \(bu" 4
+Binary append/read, create a new file if needed\&. Read operations can take place anywhere in the file, but the output operations are still done at the end of the file\&. 
+.PP
+
+.PP
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to a \fCFILE\fP object that identifies a stream, or \fCNULL\fP on failure\&. Use \fBpdlvl_geterror()\fP to retrieve the error message\&. 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+The stream opened by this function should be closed later with \fBpdlvl_close()\fP\&. 
+.RE
+.PP
+
+.SS "\fBSubArea\fP* pdlvl_subdiv (\fBLevel\fP * lvl, size_t idx, int * pw, int * ph, \fBTile\fP ** pptiles)"
+
+.PP
+Retrieves information about a level sub-area\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIlvl\fP A pointer to a level structure\&. 
+.br
+\fIidx\fP Sub-area number (starting from 0)\&. 
+.br
+\fIpw\fP A pointer that, if set, is filled with the width of the sub-area\&. 
+.br
+\fIph\fP A pointer that, if set, is filled with the height of the sub-area\&. 
+.br
+\fIpptiles\fP A pointer that, if set, is filled with the address to an array of tiles\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the requested sub-area or \fCNULL\fP if \fIlvl\fP is \fCNULL\fP, \fIidx\fP is invalid, or the level structure has no sub-areas\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

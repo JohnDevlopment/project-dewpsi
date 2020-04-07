@@ -1,0 +1,31 @@
+.TH "Level" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Level
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "\fBLevelHeader\fP \fBheader\fP"
+.br
+.ti -1c
+.RI "\fBSubArea\fP * \fBdivs\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Struct representing the entire level in file\&. The header contains a small list of strings denoting the names of files that are to be used by the level\&. It also contains the number of divisions in the level, which member divs depends on\&. 
+.SH "Field Documentation"
+.PP 
+.SS "\fBSubArea\fP* Level::divs"
+Array of sub-divisions (count: header->numdivs) 
+.SS "\fBLevelHeader\fP Level::header"
+The header of the level 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

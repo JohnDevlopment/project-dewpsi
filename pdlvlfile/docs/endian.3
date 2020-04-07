@@ -1,0 +1,157 @@
+.TH "endian" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+endian \- These functions convert integers from one endian to another\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "uint16_t \fBpdlvl_ntole16\fP (uint16_t x)"
+.br
+.RI "Converts a 16 bit integer to little endian from the native byte order\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_ntole32\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to little endian from the native byte order\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_ntobe32\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to big endian from the native byte order\&. "
+.ti -1c
+.RI "uint16_t \fBpdlvl_le16ton\fP (uint16_t x)"
+.br
+.RI "Converts a 16 bit integer to the native byte order from little endian\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_le32ton\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to the native byte order from little endian\&. "
+.ti -1c
+.RI "uint32_t \fBpdlvl_be32ton\fP (uint32_t x)"
+.br
+.RI "Converts a 32 bit integer to the native byte order from big endian\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+These functions convert integers from one endian to another\&. 
+
+Endian functions are named using the syntax pdlvl_XXtoYY, where \fIXX\fP and \fIYY\fP are \fBn\fP, \fBle32\fP, \fBle16\fP, or \fBbe32\fP\&. The integer passed to a function is presumed to be \fIXX\fP and is converted to \fIYY\fP\&. Here is an example\&.
+.PP
+.PP
+.nf
+// native to 32 bit little endian
+uint32_t native = 0x01020304;
+uint32_t little_endian = pdlvl_ntole32(native);
+
+// native to 32 bit big endian
+uint32_t native = 0x01020304;
+uint32_t big_endian = pdlvl_ntobe32(native);
+.fi
+.PP
+.PP
+The first example shown converts a native integer to little endian\&. Because my machine is little endian, no conversion is done to \fInative\fP\&. However, when it is converted to big endian, it turns from 0x01020304 to 0x04030201\&. 
+.SH "Function Documentation"
+.PP 
+.SS "uint32_t pdlvl_be32ton (uint32_t x)"
+
+.PP
+Converts a 32 bit integer to the native byte order from big endian\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP A 32 bit integer in big endian format 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The integer converted to native byte order 
+.RE
+.PP
+
+.SS "uint16_t pdlvl_le16ton (uint16_t x)"
+
+.PP
+Converts a 16 bit integer to the native byte order from little endian\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP A 16-bit integer in little endian format 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The integer converted to native endian format 
+.RE
+.PP
+
+.SS "uint32_t pdlvl_le32ton (uint32_t x)"
+
+.PP
+Converts a 32 bit integer to the native byte order from little endian\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP A 32 bit integer in little endian format 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The integer converted to native byte order 
+.RE
+.PP
+
+.SS "uint32_t pdlvl_ntobe32 (uint32_t x)"
+
+.PP
+Converts a 32 bit integer to big endian from the native byte order\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP A 32-bit integer in native byte order 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The integer swapped to be big endian 
+.RE
+.PP
+
+.SS "uint16_t pdlvl_ntole16 (uint16_t x)"
+
+.PP
+Converts a 16 bit integer to little endian from the native byte order\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP An integer in native byte order\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+An integer converted to little endian\&. 
+.RE
+.PP
+
+.SS "uint32_t pdlvl_ntole32 (uint32_t x)"
+
+.PP
+Converts a 32 bit integer to little endian from the native byte order\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIx\fP A 32-bit integer in native byte order 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The integer swapped to be little endian 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

@@ -3,13 +3,13 @@
 #include "pd_internal.h"
 #include "pd_stdinc.h"
 #include "pd_memory.h"
-#include <stdarg.h>
-#include <assert.h>
 
 int pdlvl_writeheader(FILE* stream, const Level* lvl)
 {
     int written;
-    const LevelHeader* blk = pdlvl_cheader(lvl);
+    const LevelHeader* blk;
+    
+    blk = pdlvl_cheader(lvl);
     
     /* write PDLV tag */
     rewind(stream);
@@ -39,17 +39,16 @@ int pdlvl_writeAREA(FILE* stream, const Level* lvl, size_t idx)
     /* null parameters */
     if (! stream)
     {
-        bad_param("stream");
+        pdlvl_badparam("stream");
         return false;
     }
     if (! lvl)
     {
-        bad_param("lvl");
+        pdlvl_badparam("lvl");
         return false;
     }
     
-    /* index outside range
-    TODO change pdlvl_numdivs return type to size_t */
+    /* index outside range */
     if (idx >= (size_t) pdlvl_numdivs(lvl))
     {
         pdlvl_seterror("index %u out of range, max: %u", idx, (size_t) pdlvl_numdivs(lvl)-1);
@@ -94,14 +93,14 @@ int pdlvl_writelevel(FILE* stream, const Level* lvl)
     int count;
     
     /* bad parameters */
-    if (! lvl)
-    {
-        bad_param("lvl");
-        return false;
-    }
     if (! stream)
     {
-        bad_param("stream");
+        pdlvl_badparam("stream");
+        return false;
+    }
+    if (! lvl)
+    {
+        pdlvl_badparam("lvl");
         return false;
     }
     
@@ -129,20 +128,21 @@ int pdlvl_writelevel(FILE* stream, const Level* lvl)
 int pdlvl_readheader(FILE* stream, Level* lvl)
 {
     int code;
-    LevelHeader* header;
+    LevelHeader* header = NULL;
     
     /* bad parameters */
-    if (! lvl)
-    {
-        bad_param("lvl");
-        return false;
-    }
     if (! stream)
     {
-        bad_param("stream");
+        pdlvl_badparam("stream");
+        return false;
+    }
+    if (! lvl)
+    {
+        pdlvl_badparam("lvl");
         return false;
     }
     
+    /* header pointer */
     header = pdlvl_header(lvl);
     
     /* free 'divs' array if non-null */
@@ -153,8 +153,8 @@ int pdlvl_readheader(FILE* stream, Level* lvl)
     rewind(stream);
     if (pdlvl_readbe32(stream, &code) != PDLV)
     {
-        if (! code) return false;
-        pdlvl_seterror("PDLV identifier not found in header");
+        if (code)
+            pdlvl_seterror("PDLV identifier not found in header");
         return false;
     }
     
@@ -173,7 +173,7 @@ int pdlvl_readheader(FILE* stream, Level* lvl)
     return true;
 }
 
-int pdlvl_readAREA(FILE* stream, SubArea* const subdiv, size_t blksize)
+int pdlvl_readAREA(FILE* stream, SubArea* subdiv, size_t blksize)
 {
     int code;
     uint16_t numtiles;
@@ -181,17 +181,17 @@ int pdlvl_readAREA(FILE* stream, SubArea* const subdiv, size_t blksize)
     /* bad parameters */
     if (! stream)
     {
-        bad_param("stream");
+        pdlvl_badparam("stream");
         return false;
     }
     if (! subdiv)
     {
-        bad_param("subdiv");
+        pdlvl_badparam("subdiv");
         return false;
     }
     if (! blksize)
     {
-        bad_param("blksize");
+        pdlvl_badparam("blksize");
         return false;
     }
     
@@ -203,24 +203,25 @@ int pdlvl_readAREA(FILE* stream, SubArea* const subdiv, size_t blksize)
         for (int x = 0; x < 2; ++x)
         {
             ((uint8_t*) &subdiv->width)[x] = pdlvl_read8(stream, &code);
-            if (! code) break;
+            if (! code)
+                return false;
         }
     }
     
     /* zero width or height */
     if (! subdiv->width)
     {
-        pdlvl_seterror("sub-division zero width");
+        pdlvl_seterror("sub-division %u zero width", subdiv->id);
     }
     else if (! subdiv->height)
     {
-        pdlvl_seterror("sub-division zero height");
+        pdlvl_seterror("sub-division %u zero height", subdiv->id);
     }
     else
     {
         /* allocate tile array */
         numtiles = subdiv->width * subdiv->height;
-        subdiv->tiles = allocm(Tile, numtiles);
+        subdiv->tiles = pdlvl_calloc(numtiles, sizeof(Tile));
         if (subdiv->tiles)
         {
             /* read and swap tile bytes */
@@ -231,7 +232,7 @@ int pdlvl_readAREA(FILE* stream, SubArea* const subdiv, size_t blksize)
     return code;
 }
 
-int pdlvl_readlevel(FILE* stream, Level* lvl)
+size_t pdlvl_readlevel(FILE* stream, Level* lvl)
 {
     size_t numdivs, i = 0, read = 0;
     SubArea* divs = NULL;
@@ -239,17 +240,17 @@ int pdlvl_readlevel(FILE* stream, Level* lvl)
     /* bad parameters */
     if (! stream)
     {
-        bad_param("stream");
+        pdlvl_badparam("stream");
         return false;
     }
     if (! lvl)
     {
-        bad_param("lvl");
+        pdlvl_badparam("lvl");
         return false;
     }
     
-    /* number of divisions */
-    numdivs = pdlvl_numdivs(lvl);
+    /* number of divisions invalid? */
+    numdivs = (size_t) pdlvl_numdivs(lvl);
     if (! numdivs)
     {
         pdlvl_seterror("zero sub-divisions");
@@ -257,7 +258,7 @@ int pdlvl_readlevel(FILE* stream, Level* lvl)
     }
     
     /* allocate an array of sub-divisions */
-    divs = allocm(SubArea, numdivs);
+    divs = (SubArea*) pdlvl_calloc(numdivs, sizeof(SubArea));
     if (! divs)
         return false;
     
@@ -325,5 +326,5 @@ int pdlvl_readlevel(FILE* stream, Level* lvl)
     numdivs = 0;
 #endif
     
-    return (read > 0) ? true : false;
+    return read;
 }

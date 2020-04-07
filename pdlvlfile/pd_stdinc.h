@@ -9,6 +9,8 @@
  #include <cerrno>
  #include <cstdint>
  #include <cstddef>
+ #include <cctype>
+ #include <alloca.h>
 #else
  #include <stdio.h>
  #include <stdlib.h>
@@ -17,6 +19,8 @@
  #include <stdbool.h>
  #include <stdint.h>
  #include <stddef.h>
+ #include <ctype.h>
+ #include <alloca.h>
 #endif /* __cplusplus */
 
 #endif /* PD_STDINC_H_INCLUDED */

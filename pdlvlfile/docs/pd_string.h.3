@@ -1,0 +1,95 @@
+.TH "pd_string.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_string.h \- C Header that defines portable string functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBpdlvl_strchr\fP(s,  c)"
+.br
+.RI "Locates the first occurrence of \fIc\fP in a string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_strtok\fP(s,  ss)"
+.br
+.RI "Splits a string into tokens\&. "
+.ti -1c
+.RI "#define \fBpdlvl_strlen\fP(s)"
+.br
+.RI "Measures the length of a string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_strcpy\fP(s,  d)"
+.br
+.RI "Copies a string pointed to by \fIs\fP into the array pointed to by \fId\fP\&. "
+.ti -1c
+.RI "#define \fBpdlvl_strcat\fP(d,  s)"
+.br
+.RI "Appends a copy of the source string to the destination string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_isdigit\fP(c)"
+.br
+.RI "Checks whether a character is a digit\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+C Header that defines portable string functions\&. 
+
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define pdlvl_isdigit(c)"
+
+.PP
+Checks whether a character is a digit\&. 
+.PP
+\fBReturns:\fP
+.RS 4
+Non-zero if \fIc\fP is a digit (0-9) or zero otherwise\&. 
+.RE
+.PP
+
+.SS "#define pdlvl_strcat(d, s)"
+
+.PP
+Appends a copy of the source string to the destination string\&. The first null character in \fId\fP is overwritten by the first character in \fIs\fP\&. And a null character is included at the end of the new string formed by the concatenation of both \fId\fP\&.
+.PP
+\fBReturns:\fP
+.RS 4
+\fID\fP is returned\&. 
+.RE
+.PP
+
+.SS "#define pdlvl_strchr(s, c)"
+
+.PP
+Locates the first occurrence of \fIc\fP in a string\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIs\fP A C-style string\&. 
+.br
+\fIc\fP The character to be located\&. It is passed as an \fCint\fP but is internally cast back to a \fCchar\fP for comparison\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+A pointer to the first occurrence of \fIc\fP in \fIs\fP\&. 
+.RE
+.PP
+
+.SS "#define pdlvl_strlen(s)"
+
+.PP
+Measures the length of a string\&. Calls strlen()\&. 
+.SS "#define pdlvl_strtok(s, ss)"
+
+.PP
+Splits a string into tokens\&. Calls strtok()\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

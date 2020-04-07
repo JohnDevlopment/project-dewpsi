@@ -1,6 +1,10 @@
 #ifndef PD_LEVELHEADER_H
 #define PD_LEVELHEADER_H
 
+/**
+*   @file   pd_LevelHeader.h
+*/
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -14,12 +18,13 @@ extern "C" {
  #define MUSIC_LENGTH       17
 #endif
 
+/*! A struct that defines a level header */
 struct LevelHeader {
-    char bgBottom[BGBOTTOM_LENGTH];
-    char bgTop[BGTOP_LENGTH];
-    char tileset[TILESET_LENGTH];
-    char music[MUSIC_LENGTH];
-    uint16_t numdivs;
+    char bgBottom[BGBOTTOM_LENGTH]; /// Name of a file containing image data. Used for loading the bottom-layer background image.
+    char bgTop[BGTOP_LENGTH];       /// Name of a file containing image data. Used for loading the top-layer background image.
+    char tileset[TILESET_LENGTH];   /// Name of a file containing image data. Used for loading the tileset.
+    char music[MUSIC_LENGTH];       /// Name of a file containing audio data. Used for loading the background music.
+    uint16_t numdivs;               /// Number of sub-areas in the level. Must be >= 1.
 };
 
 #ifdef __cplusplus

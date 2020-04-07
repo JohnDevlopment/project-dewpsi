@@ -1,0 +1,45 @@
+.TH "pd_error.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_error.h \- A header file for the pdlvlfile library\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBpdlvl_badparam\fP(str)"
+.br
+.RI "Formats a 'bad parameter' error string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_outofmemory\fP()"
+.br
+.RI "Formats an 'out of memory' error string\&. "
+.ti -1c
+.RI "#define \fBpdlvl_writeerror\fP()"
+.br
+.RI "Formats a 'write operation' error string\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBpdlvl_seterror\fP (const char *fmt,\&.\&.\&.)"
+.br
+.RI "Formats an error string, which can be retrieved with \fBpdlvl_geterror()\fP\&. "
+.ti -1c
+.RI "const char * \fBpdlvl_geterror\fP ()"
+.br
+.RI "Returns the error string\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A header file for the pdlvlfile library\&. 
+
+Contains functions that set and retrieve error messages\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

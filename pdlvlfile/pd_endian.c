@@ -1,7 +1,8 @@
 #include "pd_endian.h"
+#include "pd_config.h"
 #include <limits.h>
 
-#if !defined(LINUX) || defined(KEEP_SWAP_FUNCTIONS)
+#if !defined(LINUX)
 static int get_endian(void)
 {
     static short int _endian = 0;
@@ -48,7 +49,7 @@ static int get_endian(void)
 
 /* These functions swap values */
 
-#if !defined(LINUX) || defined(KEEP_SWAP_FUNCTIONS)
+#if !defined(LINUX)
 uint16_t _pdlvl_swap16(uint16_t x)
 {
     union
@@ -65,7 +66,7 @@ uint16_t _pdlvl_swap16(uint16_t x)
 }
 #endif /* LINUX */
 
-#if !defined(LINUX) || defined(KEEP_SWAP_FUNCTIONS)
+#if !defined(LINUX)
 uint32_t _pdlvl_swap32(uint32_t x)
 {
     union
@@ -88,19 +89,19 @@ uint32_t _pdlvl_swap32(uint32_t x)
 
 uint16_t pdlvl_ntole16(uint16_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_HTOLE16)
     return htole16(x);
 #else
     if (get_endian() == LITTLE_ENDIAN)
         return x;
 
     return pdlvl_swap16(x);
-#endif /* LINUX */
+#endif
 }
 
 uint32_t pdlvl_ntole32(uint32_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_HTOLE32)
     return htole32(x);
 #else
     if (get_endian() == LITTLE_ENDIAN)
@@ -112,7 +113,7 @@ uint32_t pdlvl_ntole32(uint32_t x)
 
 uint32_t pdlvl_ntobe32(uint32_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_HTOBE32)
     return htobe32(x);
 #else
     if (get_endian() == BIG_ENDIAN)
@@ -126,7 +127,7 @@ uint32_t pdlvl_ntobe32(uint32_t x)
 
 uint16_t pdlvl_le16ton(uint16_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_LE16TOH)
     return le16toh(x);
 #else
     if (get_endian() != LITTLE_ENDIAN)
@@ -138,7 +139,7 @@ uint16_t pdlvl_le16ton(uint16_t x)
 
 uint32_t pdlvl_le32ton(uint32_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_LE32TOH)
     return le32toh(x);
 #else
     if (get_endian() != LITTLE_ENDIAN)
@@ -150,7 +151,7 @@ uint32_t pdlvl_le32ton(uint32_t x)
 
 uint32_t pdlvl_be32ton(uint32_t x)
 {
-#ifdef LINUX
+#if defined(LINUX) && defined(HAVE_BE32TOH)
     return be32toh(x);
 #else
     if (get_endian() != BIG_ENDIAN)

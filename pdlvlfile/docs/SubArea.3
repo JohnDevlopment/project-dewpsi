@@ -1,0 +1,43 @@
+.TH "SubArea" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SubArea
+.SH SYNOPSIS
+.br
+.PP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "uint32_t \fBid\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBwidth\fP"
+.br
+.ti -1c
+.RI "uint8_t \fBheight\fP"
+.br
+.ti -1c
+.RI "\fBTile\fP * \fBtiles\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A struct that represents a sub-area\&.
+.PP
+Written to file in what's known as an AREA block\&. It's marked by a 32 bit tag that shows as 'AREA' when the file is read in text mode, followed by the size of the block (represented as a 32 bit little endian integer)\&. 
+.SH "Field Documentation"
+.PP 
+.SS "uint8_t SubArea::height"
+The height of the sub-area in tiles 
+.SS "uint32_t SubArea::id"
+The ID of the block 
+.SS "\fBTile\fP* SubArea::tiles"
+The tile array (count: width x height) 
+.SS "uint8_t SubArea::width"
+The width of the sub-area in tiles 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

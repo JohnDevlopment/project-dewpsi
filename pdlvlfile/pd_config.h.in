@@ -1,0 +1,27 @@
+#ifndef PD_CONFIG_H_INCLUDED
+#define PD_CONFIG_H_INCLUDED
+
+#cmakedefine HAVE_ISDIGIT
+#cmakedefine HAVE_ATOI
+
+#cmakedefine HAVE_ALLOCA
+#cmakedefine HAVE_HTOLE16
+#cmakedefine HAVE_HTOLE32
+#cmakedefine HAVE_HTOBE32
+#cmakedefine HAVE_LE16TOH
+#cmakedefine HAVE_LE32TOH
+#cmakedefine HAVE_BE32TOH
+
+#cmakedefine HAVE_FPRINTF
+#cmakedefine HAVE_VSPRINTF
+#cmakedefine HAVE_MALLOC
+#cmakedefine HAVE_CALLOC
+#cmakedefine HAVE_FREE
+#cmakedefine HAVE_STRLEN
+#cmakedefine HAVE_STRCHR
+#cmakedefine HAVE_STRTOK
+#cmakedefine HAVE_STRLEN
+#cmakedefine HAVE_STRCPY
+#cmakedefine HAVE_STRCAT
+
+#endif /* PD_CONFIG_H_INCLUDED */

@@ -1,0 +1,198 @@
+.TH "pd_main.h" 3 "Mon Apr 6 2020" "Version 1.0.5" "pdlvlfile" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pd_main.h \- Header with functions to read and write level data to file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpdlvl_writeheader\fP (FILE *stream, const \fBLevel\fP *lvl)"
+.br
+.RI "Writes a level header to stream\&. "
+.ti -1c
+.RI "int \fBpdlvl_writeAREA\fP (FILE *stream, const \fBLevel\fP *lvl, size_t idx)"
+.br
+.RI "Writes an AREA block to file\&. "
+.ti -1c
+.RI "int \fBpdlvl_writelevel\fP (FILE *stream, const \fBLevel\fP *lvl)"
+.br
+.RI "Writes a level structure to file\&. "
+.ti -1c
+.RI "int \fBpdlvl_readheader\fP (FILE *stream, \fBLevel\fP *lvl)"
+.br
+.RI "Reads a level header from stream\&. "
+.ti -1c
+.RI "int \fBpdlvl_readAREA\fP (FILE *stream, \fBSubArea\fP *subdiv, size_t blksize)"
+.br
+.RI "Reads an AREA block into a sub-division block\&. "
+.ti -1c
+.RI "size_t \fBpdlvl_readlevel\fP (FILE *stream, \fBLevel\fP *lvl)"
+.br
+.RI "Reads data blocks from stream into the level structure\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header with functions to read and write level data to file\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+John Russell 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+Feburary 24, 2020 (8:23 PM CST)
+.RE
+.PP
+These functions rely on the standard C IO functions, which uses FILE objects and functions declared in stdio\&.h\&. 
+.SH "Function Documentation"
+.PP 
+.SS "int pdlvl_readAREA (FILE * stream, \fBSubArea\fP * subdiv, size_t blksize)"
+
+.PP
+Reads an AREA block into a sub-division block\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIsubdiv\fP Filled with the information from the stream 
+.br
+\fIblksize\fP Size of the block to read 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 on failure\&. In case of error, call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error message\&. 
+.RE
+.PP
+
+.SS "int pdlvl_readheader (FILE * stream, \fBLevel\fP * lvl)"
+
+.PP
+Reads a level header from stream\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIlvl\fP Pointer to a level structure whose header is filled with data from the stream 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success and 0 on failure\&. In the case of failure, call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error message\&.
+.RE
+.PP
+\fBRemarks:\fP
+.RS 4
+Internally, the function frees memory associated with the sub-divisions in the level after checking the parameters\&. So assuming you don't get any errors from that, or you get no errors at all, then it should be assumed that there are no sub-divisions in the level structure after this call\&. 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Tell the user whether sub-divisions have been freed or not\&. 
+.RE
+.PP
+
+.SS "size_t pdlvl_readlevel (FILE * stream, \fBLevel\fP * lvl)"
+
+.PP
+Reads data blocks from stream into the level structure\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIlvl\fP Filled with the information extracted from stream\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Number of bytes read from file\&. If this value doesn't match the size of the level structure, then an error has occurred, in which case \fB\fBpdlvl_geterror()\fP\fP should be called\&. 
+.RE
+.PP
+\fBRemarks:\fP
+.RS 4
+If the function returns a non-zero value, then that is an indication that sub-divisions have been allocated inside the level structure\&. But that doesn't neccessarily mean that all the sub-divisions are valid, since this function can return a non-zero value even if it fails to read enough bytes to fill the entire array\&. 
+.PP
+It is an error for any of the parameters to be \fCNULL\fP\&. 
+.RE
+.PP
+\fBTodo\fP
+.RS 4
+Check size of level structure and match it with the number of bytes read\&. 
+.RE
+.PP
+
+.SS "int pdlvl_writeAREA (FILE * stream, const \fBLevel\fP * lvl, size_t idx)"
+
+.PP
+Writes an AREA block to file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIlvl\fP Pointer to a level structure 
+.br
+\fIidx\fP Sub-division number (>= 0, < number of divs) 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success or 0 on failure\&. If the function returns 0, you can call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error message\&. 
+.RE
+.PP
+
+.SS "int pdlvl_writeheader (FILE * stream, const \fBLevel\fP * lvl)"
+
+.PP
+Writes a level header to stream\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIlvl\fP Pointer to a level structure 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+1 on success or 0 on failure\&. If the function returns 0, you can call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error message\&.
+.RE
+.PP
+\fBRemarks:\fP
+.RS 4
+In the case of failure, call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error string\&. 
+.RE
+.PP
+
+.SS "int pdlvl_writelevel (FILE * stream, const \fBLevel\fP * lvl)"
+
+.PP
+Writes a level structure to file\&. This function does not call \fBpdlvl_writeheader()\fP; you must do so yourself\&. Call this function when you want to comprehensively write every block to file\&. Procedurally, what this function does is it seeks to the place just after the header, and then it writes every block to file, starting with the AREA blocks\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstream\fP Pointer to a FILE object that identifies a stream 
+.br
+\fIlvl\fP Pointer to a level structure 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Number of bytes written or -1 on failure\&. Failure conditions include errors writing to the stream, parameters stream or lvl being \fCNULL\fP, or there being no sub-divisions in the level\&. In the case of failure, call \fB\fBpdlvl_geterror()\fP\fP to retrieve the error message\&. 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for pdlvlfile from the source code\&.

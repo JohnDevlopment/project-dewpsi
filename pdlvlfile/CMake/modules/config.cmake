@@ -1,34 +1,37 @@
+# cache help strings
+set (CONFIG_DOCSTRING "Build configuration, options are: None Debug Release RelWithDebInfo")
+set (CMAKE_BUILD_TYPE_DOCSTRING "Choose the type of build, options are: None Debug Release RelWithDebInfo")
+
+# C standard
 set (CMAKE_C_STANDARD 99)
 set (CMAKE_C_STANDARD_REQUIRED ON)
 set (CMAKE_CXX_STANDARD_REQUIRED OFF)
 
-# library type; suggest attribute string; source files
-set (TYPE shared CACHE STRING "must be shared, module, or static")
-set (SUGGEST_ATTR "" CACHE STRING "if defined, adds -Wsuggest-attribute=arg to commandline")
-set (FILES "pd_endian.c;pd_error.c;pd_file.c;pd_main.c;pd_memory.c" CACHE STRING "list of source files")
+### Build configuration section
 
-# mandoc files
-set (temp "")
-foreach (_file "pdlvl_error.3;pdlvl_new.3;pdlvl_writeheader.3")
-	string (APPEND temp "${PROJECT_ROOT_DIR}/docs/${_file}")
+# build configuration type
+set (CONFIG Release CACHE STRING "${CONFIG_DOCSTRING}")
+if (NOT CMAKE_BUILD_TYPE OR NOT ${CMAKE_BUILD_TYPE} MATCHES "${CONFIG}")
+	set (CMAKE_BUILD_TYPE ${CONFIG} CACHE STRING "${CMAKE_BUILD_TYPE_DOCSTRING}" FORCE)
 endif ()
-set (MANDOCS ${temp} CACHE INTERNAL "list of man files to be installed")
-unset (temp)
+# if Debug: CMAKE_C_FLAGS_DEBUG, CMAKE_C_EXTRA_FLAGS_DEBUG
+# if Release: CMAKE_C_FLAGS_RELEASE, CMAKE_C_EXTRA_FLAGS_RELEASE
 
-# public headers to be installed
-set (PUBLIC_HEADERS "")
-foreach (_file ${FILES})
-	string (REPLACE ".c" ".h" _file ${_file})
-	string (APPEND PUBLIC_HEADERS "${_file};")
-endforeach ()
-unset (_file)
-string (APPEND PUBLIC_HEADERS "pd_LevelHeader.h;pd_pubtypes.h;pd_stdinc.h;pdlvlfile.h;pd_stddef.h;pd_Tile.h;endian/${PLATFORM_DIR}/_pd_endian.h")
+### Target-related options
 
-# debug configuration; keep swap functions
-option (DEBUG "debug configuration" FALSE)
-option (KEEP "implement swap functions" FALSE)
+# library type
+set (TYPE shared CACHE STRING "Type of library to build, can be: shared module static")
 
-message ("${TYPE} library")
-message (STATUS "debug configuration ${DEBUG}")
-message (STATUS "keep swap functions ${KEEP}")
-message (STATUS "SUGGEST_ATTR = ${SUGGEST_ATTR}")
+# source files
+set (temp pd_endian.c pd_error.c pd_file.c pd_main.c pd_memory.c)
+list_prefix (SOURCE_FILES "${PROJECT_ROOT_DIR}" "${temp}")
+
+# header files
+set (temp pd_endian.h pd_error.h pd_file.h
+    pd_internal.h pd_LevelHeader.h pdlvlfile.h pd_main.h
+    pd_memory.h pd_pubtypes.h pd_stddef.h pd_stdinc.h pd_Tile.h pd_types.h)
+list_prefix (PUBLIC_HEADERS "${PROJECT_ROOT_DIR}" "${temp}")
+list (APPEND PUBLIC_HEADERS "${PROJECT_ROOT_DIR}/endian/${PLATFORM_DIR}/_pd_endian.h")
+
+# free variables
+unset_list (CONFIG_DOCSTRING CMAKE_BUILD_TYPE_DOCSTRING temp)
